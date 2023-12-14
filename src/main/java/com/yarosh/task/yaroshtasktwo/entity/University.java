@@ -1,5 +1,6 @@
 package com.yarosh.task.yaroshtasktwo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -13,12 +14,13 @@ public class University {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "name")
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "university")
+    @JsonIgnore
     private List<Student> students;
 
     public University() {
@@ -36,11 +38,11 @@ public class University {
         student.setUniversity(this);
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -58,11 +60,6 @@ public class University {
 
     public void setStudents(List<Student> students) {
         this.students = students;
-    }
-
-    @Override
-    public String toString() {
-        return "Id - " + this.id + ", University name - " + this.name;
     }
 
     @Override
@@ -88,6 +85,14 @@ public class University {
         }
 
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "University{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
 
     @Override
